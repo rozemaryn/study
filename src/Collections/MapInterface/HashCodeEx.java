@@ -26,16 +26,13 @@ public class HashCodeEx {
         for (Map.Entry <Student, Double> entry: map.entrySet()) {
             System.out.println(entry.getKey() +": " + entry.getValue());
         }
-
-
-
     }
 }
 
-class Student {
-    String name;
-    String surname;
-    int course;
+final class Student implements Comparable <Student> {
+    final String name;
+    final String surname;
+    final int course;
 
     public Student(String name, String surname, int course) {
         this.name = name;
@@ -65,4 +62,8 @@ class Student {
         return Objects.hash(name, surname, course);
     }
 
+    @Override
+    public int compareTo (Student s) {
+        return this.name.compareTo(s.name);
+    }
 }
