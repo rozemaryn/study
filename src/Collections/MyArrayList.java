@@ -55,9 +55,7 @@ public class MyArrayList {
         capacity = temp.length;
     }
 
-    /* нужно дополнить метод toString, чтобы он не отображал null элементы
-    есть решение с помощью stream, но тут проблемы в последней строке
-
+    /* переписала метод toString, чтобы он не отображал null элементы
     */
 
     @Override
@@ -73,20 +71,10 @@ public class MyArrayList {
     }
 
 
-//    @Override
-//    public String toString() {
-//        return "MyArrayList{" +
-//                "massive=" + Arrays.toString(massive) +
-//                '}';
-//    }
+//     удаляем элемент из ArrayList
+//     сперва обнуляем удаляемый элемент, пч из массива нельзя удалять элементы
+//     затем все элементы справа от него сдвигаем влево с помощью цикла
 
-    /**
-     * удаляем элемент из ArrayList
-     * сперва обнуляем удаляемый элемент, пч из массива нельзя удалять элементы
-     * затем все элементы справа от него сдвигаем влево с помощью цикла
-     *
-     * @param index
-     */
     public void removeFromArrayList(int index) {
         massive[index] = null;
         for (int i = index; i < size; i++) {
