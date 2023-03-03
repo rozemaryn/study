@@ -1,21 +1,24 @@
 package Collections;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class MyArrayList {
-    Object [] massive = new Object [10];
+    Object[] massive = new Object[10];
     int capacity = massive.length;
     int size;
 
     /* дефолтный конструктор, когда capacity 10 */
-    MyArrayList () {
+    MyArrayList() {
         this.massive = massive;
     }
 
     /* конструктор, когда сами задаём capacity*/
 
-    MyArrayList (int a) {
-        this.massive = new Object [a];
+    MyArrayList(int a) {
+        this.massive = new Object[a];
     }
 
     /*метод add
@@ -25,9 +28,9 @@ public class MyArrayList {
     также учесть вариант, когда массив уже заполнен на 3/4, тогда его сперва нужно увеличить и потом записать
      */
 
-    public void addToArrayList (Object newObject) {
+    public void addToArrayList(Object newObject) {
 
-        if (size < capacity*0.75) {
+        if (size < capacity * 0.75) {
             for (int i = 0; i < capacity; i++) {
                 if (massive[i] == null) {
                     massive[i] = newObject;
@@ -36,29 +39,74 @@ public class MyArrayList {
                 }
             }
 
-        }
-        else if (size >= capacity*0.75) {
+        } else if (size >= capacity * 0.75) {
             makeBigger();
             massive[size] = newObject;
             size++;
         }
     }
 
-
-    public void makeBigger () {
+    public void makeBigger() {
         /* нужно, чтобы старый ArrayList ссылался на новый массив
-        * создаю новый, более вместительный массив и записываю туда элементы*/
+         * создаю новый, более вместительный массив и записываю туда элементы*/
 
-        Object [] temp = Arrays.copyOf(massive, (int)(capacity*1.5));
+        Object[] temp = Arrays.copyOf(massive, (int) (capacity * 1.5));
         massive = temp;
         capacity = temp.length;
     }
 
+    /* нужно дополнить метод toString, чтобы он не отображал null элементы
+    есть решение с помощью stream, но тут проблемы в последней строке
+
+    */
+
     @Override
     public String toString() {
+        String joinedString = Arrays
+                .stream(massive)
+                .filter(Objects::nonNull)
+                .map(Object::toString)
+                .collect(Collectors.joining(", "));
+
         return "MyArrayList{" +
-                "massive=" + Arrays.toString(massive) +
-                '}';
+                "massive=" + joinedString + "}";
+    }
+
+
+//    @Override
+//    public String toString() {
+//        return "MyArrayList{" +
+//                "massive=" + Arrays.toString(massive) +
+//                '}';
+//    }
+
+    /**
+     * удаляем элемент из ArrayList
+     * сперва обнуляем удаляемый элемент, пч из массива нельзя удалять элементы
+     * затем все элементы справа от него сдвигаем влево с помощью цикла
+     *
+     * @param index
+     */
+    public void removeFromArrayList(int index) {
+        massive[index] = null;
+        for (int i = index; i < size; i++) {
+            massive[i] = massive[i + 1];
+        }
+    }
+
+    public void removeFromArrayList(String value) {
+        int index = 0;
+
+        for (int i = 0; i < size; i++) {
+            if (value.equals(massive[i])) {
+                index = i;
+            }
+        }
+
+        massive[index] = null;
+        for (int i = index; i < size; i++) {
+            massive[i] = massive[i + 1];
+        }
     }
 }
 
@@ -82,5 +130,27 @@ class MyArrayListTest {
         System.out.println(list);
         System.out.println(list.size);
         System.out.println(list.capacity);
+
+        list.removeFromArrayList(2);
+        System.out.println(list);
+
+        ArrayList<Integer> list2 = new ArrayList<>();
+        list2.add(1);
+        list2.add(2);
+        System.out.println(list2);
+        list2.size();
+
+        MyArrayList stringList = new MyArrayList();
+        stringList.addToArrayList("A");
+        stringList.addToArrayList("B");
+        stringList.addToArrayList("C");
+        stringList.addToArrayList("D");
+        stringList.addToArrayList("E");
+
+        System.out.println(stringList);
+        stringList.removeFromArrayList("B");
+        System.out.println(stringList);
+
+
     }
 }
