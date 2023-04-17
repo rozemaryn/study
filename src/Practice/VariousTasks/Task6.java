@@ -27,4 +27,28 @@ public class Task6 {
 
     }
 }
+/*
+do the same, but case insensitive
+ */
+
+
+class Task6CaseInsensitive {
+    public static ArrayList <String> sortList(List <String> list) {
+        Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
+        Collections.reverse(list);
+        return (ArrayList<String>) list;
+    }
+
+    public static void main(String[] args) {
+        List <String> list = new ArrayList<>();
+        list.add("B");
+        list.add("z");
+        list.add("Y");
+        list.add("A");
+        list.add("Z");
+
+        ArrayList <String> list2 = sortList(list);
+        System.out.println(list2);
+    }
+}
 

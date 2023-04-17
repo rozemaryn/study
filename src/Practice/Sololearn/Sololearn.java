@@ -1,4 +1,4 @@
-package Practice;
+package Practice.Sololearn;
 
 import java.util.ArrayList;
 import java.util.Collections;
